@@ -42,7 +42,7 @@ checks() {
 lxcname=${1}
 lxcimagename=${2}
 ansibleplaybook=${3}
-lxcusername="haraldvdlaan"
+lxcusername="ubuntu"
 
 # checks
 if [ ${#} -lt 2 ] && [ ${#} -gt 4]; then
