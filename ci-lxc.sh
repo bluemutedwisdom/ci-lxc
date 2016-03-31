@@ -80,8 +80,9 @@ if [ ! -z ${3} ]; then
 	rm 00-lxc
 	echo "[ok]: temp sudoers file inserted"
 	echo ${lxcip} > hosts-lxc
-	ansible-playbook -i hosts-lxc ${ansibleplaybook} && echo "[ok]: container ${lxcname} with ip: ${lxcip} created and provisioned"
-	lxc exec ${lxcname} rm /etc/sudoers.d/00-lxc
+	ansible-playbook -i hosts-lxc ${ansibleplaybook} 
+	lxc stop ${lxcname}
+	lxc delete ${lxcname}
 else
 	echo "[ok]: container ${lxcname} with ip: ${lxcip} created"
 fi
