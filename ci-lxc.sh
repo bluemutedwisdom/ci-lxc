@@ -55,7 +55,7 @@ checks ${lxcimagename} ${ansibleplaybook}
 # main script - stage 1: create lxc
 lxc init ${lxcimagename} ${lxcname} &> /dev/null
 lxc start ${lxcname} &> /dev/null
-sleep 3
+sleep 5
 lxcip=$(lxc list | grep ${lxcname} | awk '{print $6}')
 echo "[ok]: lxc ${lxcname} created"
 
@@ -79,7 +79,7 @@ if [ ! -z ${3} ]; then
 	lxc file push --uid=0 --gid=0 --mode=0440 00-lxc ${lxcname}/etc/sudoers.d/00-lxc
 	rm 00-lxc
 	echo "[ok]: temp sudoers file inserted"
-	echo ${lxcip} > hosts-lxc
+	echo "${lxcip} ansible_user=${lxcusername}" > hosts-lxc
 	ansible-playbook -i hosts-lxc ${ansibleplaybook} 
 	lxc stop ${lxcname}
 	lxc delete ${lxcname}
