@@ -14,7 +14,7 @@
 #
 # Changelog
 #  - v0.1: initial version
-#  - v0,2: added syntax and idempotency checking
+#  - v0.2: added syntax and idempotency checking
 
 # functions
 checks() {
