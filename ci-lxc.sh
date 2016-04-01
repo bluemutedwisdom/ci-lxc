@@ -45,7 +45,7 @@ ansibleplaybook=${3}
 lxcusername="ubuntu"
 
 # checks
-if [ ${#} -lt 2 ] && [ ${#} -gt 4]; then
+if [[ ${#} -lt 2 ]] || [[ ${#} -gt 3 ]]; then
 	echo "[usage]: ${0} <lxc name> <lxc image> [ansible playbook]"
 	exit 1
 fi
