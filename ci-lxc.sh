@@ -94,7 +94,7 @@ if [ ! -z ${3} ]; then
 		
 		# run 2: idempotency run
 		ansible-playbook -i hosts-lxc ${ansibleplaybook} &> /tmp/output.txt
-		grep -q 'changed=0.*failed=0' /tmp/output.txt && (echo "[ok] idempotence test: pass" && exit 0) || (echo "[error] idempotence test: fail" && exit 1)
+		grep -q 'changed=0.*failed=0' /tmp/output.txt && (echo "[ok] idempotence test: pass") || (echo "[error] idempotence test: fail")
 		rm /tmp/output.txt
 		
 		lxc stop ${lxcname}
