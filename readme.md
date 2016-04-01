@@ -23,9 +23,11 @@ ci-lxc is a ci for testing ansible playbooks with lxd / lxc containers. It will 
 ### create a image to work with ci-lxc.sh
     
     lxc launch images:ubuntu/trusty/amd64 a
-    lxc exec a 'apt-get update'
-    lxc exec a 'apt-get upgrade'
-    lxc exec a 'apt-get install aptitude openssh-server'
+    lxc exec a apt-get update
+    lxc exec a apt-get upgrade
+    lxc exec a apt-get install aptitude openssh-server
+    lxc exec a passwd ubuntu
+    lxc stop a
     lxc publish a
     lxc image list
     lxc image alias create <alias name> <fingerprint>
