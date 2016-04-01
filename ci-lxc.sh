@@ -81,6 +81,7 @@ if [ ! -z ${3} ]; then
 	echo "[ok]: temp sudoers file inserted"
 	echo "${lxcip} ansible_user=${lxcusername}" > hosts-lxc
 	
+	# syntax check of playbook
 	if [ $(ansible-playbook -i hosts-lxc ${ansibleplaybook} --syntax-check &> /dev/null; echo ${?}) -ne 0 ]; then
 		echo "[error]: syntax check for ${ansibleplaybook} has failed."
 		lxc stop ${lxcname}
@@ -88,8 +89,14 @@ if [ ! -z ${3} ]; then
 		exit 1
 	else
 		echo "[ok]: syntax for ${ansibleplaybook} is ok."
+		# run 1: run playbook 
 		ansible-playbook -i hosts-lxc ${ansibleplaybook}
-		# idempotant check will come here
+		
+		# run 2: idempotency run
+		ansible-playbook -i hosts-lxc ${ansibleplaybook} &> /tmp/output.txt
+		grep -q 'changed=0.*failed=0' /tmp/output.txt && (echo "[ok] idempotence test: pass" && exit 0) || (echo "[error] idempotence test: fail" && exit 1)
+		rm /tmp/output.txt
+		
 		lxc stop ${lxcname}
 		lxc delete ${lxcname}
 	fi
