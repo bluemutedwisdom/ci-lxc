@@ -80,9 +80,19 @@ if [ ! -z ${3} ]; then
 	rm 00-lxc
 	echo "[ok]: temp sudoers file inserted"
 	echo "${lxcip} ansible_user=${lxcusername}" > hosts-lxc
-	ansible-playbook -i hosts-lxc ${ansibleplaybook} 
-	lxc stop ${lxcname}
-	lxc delete ${lxcname}
+	
+	if [ $(ansible-playbook -i hosts-lxc ${ansibleplaybook} --syntax-check &> /dev/null; echo ${?}) -ne 0 ]; then
+		echo "[error]: syntax check for ${ansibleplaybook} has failed."
+		lxc stop ${lxcname}
+		lxc delete ${lxcname}
+		exit 1
+	else
+		echo "[ok]: syntax for ${ansibleplaybook} is ok."
+		ansible-playbook -i hosts-lxc ${ansibleplaybook}
+		# idempotant check will come here
+		lxc stop ${lxcname}
+		lxc delete ${lxcname}
+	fi
 else
 	echo "[ok]: container ${lxcname} with ip: ${lxcip} created"
 fi
