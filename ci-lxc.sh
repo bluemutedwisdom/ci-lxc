@@ -5,12 +5,16 @@
 #		  from ansible.
 #
 # Author	: Harald van der Laan
-# Version	: v0.1
-# Date		: 2016/03/31
+# Version	: v0.2
+# Date		: 2016/04/01
 #
 # Requirements
 #  - lxc / lxd
 #  - ansible
+#
+# Changelog
+#  - v0.1: initial version
+#  - v0,2: added syntax and idempotency checking
 
 # functions
 checks() {
@@ -68,6 +72,7 @@ if [ ! -f ~/.ssh/id_rsa.pub ]; then
 	echo "[ok]: lxc ${lxcname} stopped and deleted."
 	exit 1
 fi
+
 lxc exec ${lxcname} mkdir /home/${lxcusername}/.ssh
 lxc file push --uid=1000 --gid=1000 ~/.ssh/id_rsa.pub ${lxcname}/home/${lxcusername}/.ssh/authorized_keys
 echo "[ok]: public key inserted in ${lxcname}"
