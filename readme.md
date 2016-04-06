@@ -15,7 +15,7 @@ ci-lxc is a ci for testing ansible playbooks with lxd / lxc containers. It will 
 
 ### install lxd/lxc
 
-    sudo apt-add-repository ppa:ubuntu-lxc/lxd
+    sudo apt-add-repository ppa:ubuntu-lxc/lxd-stable
     sudo apt-get update
     sudo apt-get install lxd
     newgrp lxd
@@ -36,4 +36,4 @@ ci-lxc is a ci for testing ansible playbooks with lxd / lxc containers. It will 
     
     sudo apt-add-repository ppa:ansible/ansible
     sudo apt-get update
-    sudo apt-get install ansbile
+    sudo apt-get install ansible
